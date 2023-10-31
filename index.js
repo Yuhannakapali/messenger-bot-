@@ -11,7 +11,7 @@ app.get("/", (req, res) => {
 
 app.get("/webhook", (req, res) => {
   let body = req.body;
-  console.log(body);
+  // console.log(body);
   // send a '200 OK' response if this page is webhook
   //   if (body.object === "page") {
   //     //   returns '200 OK' response to all requests
