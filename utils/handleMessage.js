@@ -1,6 +1,6 @@
 const { callSendAPI } = require("./callSendAPI");
 const { randomJokes } = require("./randomJokes");
-const fs = require("fs");
+const MessageJson = require("./../config/services.json")
 
 // function handleMessage(senderPsid, receivedMessage) {
 const handleMessage = async (senderPsid, receivedMessage) => {
@@ -8,19 +8,11 @@ const handleMessage = async (senderPsid, receivedMessage) => {
 
   // Checks if the message contains text
   if (receivedMessage.text) {
-    let userMessage = fs.readFileSync(
-      `${__dirname}/../config/services.json`,
-      "utf8"
-    );
-
-    // if (!userMessage[receivedMessage.text] === undefined) {
-    //   console.log("test message received");
-    // }
-    if (
-      Object.prototype.hasOwnProperty.call(userMessage, receivedMessage.text)
-    ) {
-      console.log("jfdkj");
+   
+    if(MessageJson.hasOwnProperty(receivedMessage.text)){
+      console.log("we have this");
     }
+
     if (receivedMessage.text.includes("hi")) {
       response = {
         text: `Hello, we are always available for your services`,
