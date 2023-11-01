@@ -1,7 +1,4 @@
-let { handleMessage } = require("../utils/handleMessage"),
-  { handlePostback } = require("../utils/handlePostback");
-
-// Respond with 'Hello World' when a GET request is made to the homepage
+let { handleMessage } = require("../utils/handleMessage");
 const homepage =
   ("/",
   function (_req, res) {
@@ -37,36 +34,25 @@ const getwebhook = (req, res) => {
 
 const postwebhook = (req, res) => {
   let body = req.body;
-
+  console.log(body);
   // Checks if this is an event from a page subscription
   if (body.object === "page") {
-    // returns a '200 OK' response to all requests
-    // res.status(200).send("Event Received");
-
     // Iterates over each entry - there may be multiple if batched
-    // body.entry.forEach(function (entry) {
+
     body.entry.forEach((entry) => {
-      // Gets the body of the webhook event
       let webhookEvent = entry.messaging[0];
       console.log(webhookEvent);
 
-      // Get the sender PSID
       let senderPsid = webhookEvent.sender.id;
       console.log("Sender PSID: " + senderPsid);
 
-      // Check if the event is a message or postback and
-      // pass the event to the appropriate handler function
       if (webhookEvent.message) {
         handleMessage(senderPsid, webhookEvent.message);
-      } else if (webhookEvent.postback) {
-        handlePostback(senderPsid, webhookEvent.postback);
       }
     });
 
-    // Returns a '200 OK' response to all requests
     res.status(200).send("EVENT_RECEIVED");
   } else {
-    // Returns a '404 Not Found' if event is not from a page subscription
     res.sendStatus(404);
   }
 };
