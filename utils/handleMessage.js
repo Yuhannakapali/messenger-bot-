@@ -1,6 +1,6 @@
 const { callSendAPI } = require("./callSendAPI");
 const { randomJokes } = require("./randomJokes");
-const MessageJson = require("./../config/services.json")
+const MessageJson = require("./../config/services.json");
 
 // function handleMessage(senderPsid, receivedMessage) {
 const handleMessage = async (senderPsid, receivedMessage) => {
@@ -8,12 +8,12 @@ const handleMessage = async (senderPsid, receivedMessage) => {
 
   // Checks if the message contains text
   if (receivedMessage.text) {
-   
-    if(MessageJson.hasOwnProperty(receivedMessage.text)){
-      console.log("we have this");
-    }
-
-    if (receivedMessage.text.includes("hi")) {
+    // eslint-disable-next-line no-prototype-builtins
+    if (MessageJson.hasOwnProperty(receivedMessage.text)) {
+      response = {
+        text: `${MessageJson[receivedMessage.text]}`,
+      };
+    } else if (receivedMessage.text.includes("hi")) {
       response = {
         text: `Hello, we are always available for your services`,
       };
