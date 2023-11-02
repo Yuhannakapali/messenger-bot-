@@ -1,5 +1,6 @@
 const { callSendAPI } = require("./callSendAPI");
 const { randomJokes } = require("./randomJokes");
+const MessageJson = require("./../config/services.json");
 
 // function handleMessage(senderPsid, receivedMessage) {
 const handleMessage = async (senderPsid, receivedMessage) => {
@@ -7,18 +8,21 @@ const handleMessage = async (senderPsid, receivedMessage) => {
 
   // Checks if the message contains text
   if (receivedMessage.text) {
-    if (receivedMessage.text.includes("hi")) {
+    // eslint-disable-next-line no-prototype-builtins
+    if (MessageJson.hasOwnProperty(receivedMessage.text)) {
       response = {
-        text: `hello there my friend`,
+        text: `${MessageJson[receivedMessage.text]}`,
       };
-      console.log("running hi");
+    } else if (receivedMessage.text.includes("hi")) {
+      response = {
+        text: `Hello, we are always available for your services`,
+      };
     } else if (receivedMessage.text.includes("jokes")) {
       let jokes;
       jokes = await randomJokes();
       response = {
         text: `${jokes}`,
       };
-      console.log("running jokes");
     } else {
       response = {
         text: `You sent the message: '${receivedMessage.text}'. Now send me an attachment!`,
