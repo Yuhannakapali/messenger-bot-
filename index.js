@@ -14,9 +14,12 @@ app.use(urlencoded({ extended: true }));
 // Parse application/json
 app.use(json());
 
+// Webserver parameter
+const PORT = process.env.PORT || 3001;
+
 app.use("/", require("./Routes/webhookRoutes"));
 
 // listen for requests :)
-var listener = app.listen(process.env.PORT, function () {
+var listener = app.listen(PORT, function () {
   console.log("Your app is listening on port " + listener.address().port);
 });

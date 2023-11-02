@@ -57,8 +57,77 @@ const postwebhook = (req, res) => {
   }
 };
 
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+const { responseFromWit } = require("../wit/wit_handler");
+const { callSendAPI } = require("../utils/callSendAPI");
+
+const { Wit, log } = require("node-wit");
+
+const wit = new Wit({
+  accessToken: process.env.WIT_TOKEN,
+  logger: new log.Logger(log.INFO),
+});
+
+const witWebhook = (req) => {
+  let body = req.body;
+  // console.log(body);
+  // Checks if this is an event from a page subscription
+  if (body.object === "page") {
+    body.entry.forEach((entry) => {
+      entry.messaging.forEach((event) => {
+        if (event.message && !event.message.is_echo) {
+          const senderPsid = event.sender.id;
+
+          // We retrieve the message content
+          const { text, attachments } = event.message;
+
+          if (attachments) {
+            // We received an attachment
+            // Let's reply with an automatic message
+            callSendAPI(
+              senderPsid,
+              "Sorry I can only process text messages for now."
+            ).catch(console.error);
+          } else if (text) {
+            wit
+              .message(text)
+              .then((res) => responseFromWit(senderPsid, res))
+              .then((msg) => {
+                callSendAPI(senderPsid, msg);
+              })
+              .catch((err) => {
+                console.error(
+                  "Oops! Got an error from Wit: ",
+                  err.stack || err
+                );
+              });
+          }
+        } else {
+          console.log("received event", JSON.stringify(event));
+        }
+      });
+    });
+  }
+};
+
 module.exports = {
   homepage,
   getwebhook,
   postwebhook,
+  witWebhook,
 };

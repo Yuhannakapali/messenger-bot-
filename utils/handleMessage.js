@@ -25,9 +25,13 @@ const handleMessage = async (senderPsid, receivedMessage) => {
       };
     } else {
       response = {
-        text: `You sent the message: '${receivedMessage.text}'. Now send me an attachment!`,
+        text: `Thank you for messaging us!, our members will be at your service soon!`,
       };
     }
+  } else {
+    response = {
+      text: `We only response to the text messages right now`,
+    };
   }
 
   // Send the response message
