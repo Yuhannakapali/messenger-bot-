@@ -1,6 +1,7 @@
 const { callSendAPI } = require("./callSendAPI");
 const { randomJokes } = require("./randomJokes");
 const MessageJson = require("./../config/services.json");
+const { witHandler } = require("../wit/witHandler");
 
 // function handleMessage(senderPsid, receivedMessage) {
 const handleMessage = async (senderPsid, receivedMessage) => {
@@ -8,6 +9,8 @@ const handleMessage = async (senderPsid, receivedMessage) => {
 
   // Checks if the message contains text
   if (receivedMessage.text) {
+
+    witHandler(senderPsid, receivedMessage.text)
     // eslint-disable-next-line no-prototype-builtins
     if (MessageJson.hasOwnProperty(receivedMessage.text)) {
       response = {
