@@ -1,7 +1,7 @@
 {
-  "wit_location": "location",
-  "wit_about": "About",
-  "wit_greetings": "Greetings",
-  "wit_jokes": "Jokes",
-  "wit_get_services": "services"
+  "wit_location": "we are located at anamnagar, near BigMart",
+  "wit_about": "We are a fast growing tech company that provides services to Designing and Development",
+  "wit_greetings": "Hello sir/madam we are always at your services ",
+  "wit_jokes": "You get the jokes",
+  "wit_get_services": "We Provide Services on various fields such as Web Development, mobile apps Development ,Web Designing, SEO and more "
 }
