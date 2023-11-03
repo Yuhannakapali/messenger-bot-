@@ -1,3 +1,5 @@
+const { randomJokes } = require("../utils/randomJokes");
+
 const responseFromWit = (body) => {
   // console.log("Data from wit");
   console.log(JSON.stringify(body));
@@ -11,15 +13,22 @@ const responseFromWit = (body) => {
 
     case "wit_get_services":
       return services();
+
+    case "wit_jokes":
+      return jokes();
   }
 };
 
 const location = () => {
-  console.log("this is the location");
+  return Promise.resolve("We are located at anamnagar");
 };
 
 const services = () => {
-  console.log(`we provide you with differet services`);
+  return Promise.resolve("We are always here for your services");
+};
+
+const jokes = () => {
+  return Promise.resolve(randomJokes());
 };
 
 module.exports = { responseFromWit };

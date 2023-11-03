@@ -1,14 +1,9 @@
 const { callSendAPI } = require("./callSendAPI");
+const { wit } = require("../config/witConfig.js");
 const { randomJokes } = require("./randomJokes");
 const MessageJson = require("./../config/services.json");
 
 const { responseFromWit } = require("../wit/wit_handler");
-const { Wit, log } = require("node-wit");
-
-const wit = new Wit({
-  accessToken: process.env.WIT_TOKEN,
-  logger: new log.Logger(log.INFO),
-});
 
 const handleMessage = async (senderPsid, receivedMessage) => {
   const { text, attachments } = receivedMessage;
@@ -16,14 +11,16 @@ const handleMessage = async (senderPsid, receivedMessage) => {
   if (receivedMessage.text) {
     wit
       .message(text)
-      .then((res) => responseFromWit(res))
-      .then((msg) => callSendAPI(senderPsid, msg));
+      .then((receivedMessage) => responseFromWit(receivedMessage))
+      .finally((response) => {
+        callSendAPI(senderPsid, response);
+      });
   } else {
-    console.log("received event", JSON.stringify(event));
+    console.log("received event");
   }
 
   // Send the response message
-  callSendAPI(senderPsid, text);
+  // callSendAPI(senderPsid, response);
 };
 
 module.exports = { handleMessage };
