@@ -2,40 +2,28 @@ const { callSendAPI } = require("./callSendAPI");
 const { randomJokes } = require("./randomJokes");
 const MessageJson = require("./../config/services.json");
 
-// function handleMessage(senderPsid, receivedMessage) {
-const handleMessage = async (senderPsid, receivedMessage) => {
-  let response;
+const { responseFromWit } = require("../wit/wit_handler");
+const { Wit, log } = require("node-wit");
 
-  // Checks if the message contains text
+const wit = new Wit({
+  accessToken: process.env.WIT_TOKEN,
+  logger: new log.Logger(log.INFO),
+});
+
+const handleMessage = async (senderPsid, receivedMessage) => {
+  const { text, attachments } = receivedMessage;
+
   if (receivedMessage.text) {
-    // eslint-disable-next-line no-prototype-builtins
-    if (MessageJson.hasOwnProperty(receivedMessage.text)) {
-      response = {
-        text: `${MessageJson[receivedMessage.text]}`,
-      };
-    } else if (receivedMessage.text.includes("hi")) {
-      response = {
-        text: `Hello, we are always available for your services`,
-      };
-    } else if (receivedMessage.text.includes("jokes")) {
-      let jokes;
-      jokes = await randomJokes();
-      response = {
-        text: `${jokes}`,
-      };
-    } else {
-      response = {
-        text: `Thank you for messaging us!, our members will be at your service soon!`,
-      };
-    }
+    wit
+      .message(text)
+      .then((res) => responseFromWit(res))
+      .then((msg) => callSendAPI(senderPsid, msg));
   } else {
-    response = {
-      text: `We only response to the text messages right now`,
-    };
+    console.log("received event", JSON.stringify(event));
   }
 
   // Send the response message
-  callSendAPI(senderPsid, response);
+  callSendAPI(senderPsid, text);
 };
 
 module.exports = { handleMessage };

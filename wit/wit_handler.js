@@ -1,21 +1,25 @@
-// const { witWebhook } = require("../controllers/webHookController");
-
-const responseFromWit = (senderPsid, body) => {
-  console.log("Data from wit");
+const responseFromWit = (body) => {
+  // console.log("Data from wit");
   console.log(JSON.stringify(body));
+  console.log(body.traits);
 
-  const intent = (body.intents.lenght > 0 && body.intents[0]) || "__foo__";
+  const intent = (body.intents.length > 0 && body.intents[0]) || "__foo__";
 
   switch (intent.name) {
     case "wit_location":
-      return witWebhookResponse(senderPsid, body);
-    case "services":
-      return witWebhookResponse(senderPsid, body);
+      return location();
+
+    case "wit_get_services":
+      return services();
   }
 };
 
-const witWebhookResponse = () => {
-  return Promise.resolve(`this is the  response from us`);
+const location = () => {
+  console.log("this is the location");
+};
+
+const services = () => {
+  console.log(`we provide you with differet services`);
 };
 
 module.exports = { responseFromWit };

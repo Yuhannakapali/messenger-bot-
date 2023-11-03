@@ -4,13 +4,13 @@ const router = express.Router();
 const {
   homepage,
   getwebhook,
-  // postwebhook,
-  witWebhook,
+  postwebhook,
+  // witWebhook,
 } = require("../controllers/webHookController");
 
 router.get("/", homepage);
 router.get("/webhook", getwebhook);
-// router.post("/webhook", postwebhook);
-router.post("/webhook", witWebhook);
+router.post("/webhook", postwebhook);
+// router.post("/webhook", witWebhook);
 
 module.exports = router;
