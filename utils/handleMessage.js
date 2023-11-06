@@ -20,7 +20,7 @@ const handleMessage = async (senderPsid, receivedMessage) => {
       response = {
         text: `Hello, we are always available for your  help`,
       };
-    } else if (receivedMessage.text.includes("jokes")) {
+    } else if (receivedMessage.text.includes("joke")) {
       let jokes;
       jokes = await randomJokes();
       response = {
