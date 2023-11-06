@@ -4,7 +4,7 @@ const intentJson = require("../config/intents.json");
 
 const witHandler = async (senderId, message) => {
   let response = false;
-  let witResponse = await wit.message(message);
+  const witResponse = await wit.message(message);
 
   witResponse.intents.forEach((intent) => {
     // eslint-disable-next-line no-prototype-builtins

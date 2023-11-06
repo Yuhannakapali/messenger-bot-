@@ -1,13 +1,13 @@
 const { callSendAPI } = require("./callSendAPI");
 const { randomJokes } = require("./randomJokes");
-const MessageJson = require("./../config/services.json");
+const MessageJson = require("../config/services.json");
 const { witHandler } = require("../wit/witHandler");
 
 const handleMessage = async (senderPsid, receivedMessage) => {
   let response;
 
   if (receivedMessage.text) {
-    let aiResponse = await witHandler(senderPsid, receivedMessage.text);
+    const aiResponse = await witHandler(senderPsid, receivedMessage.text);
     if (aiResponse) {
       return;
     }
@@ -21,8 +21,7 @@ const handleMessage = async (senderPsid, receivedMessage) => {
         text: `Hello, we are always available for your  help`,
       };
     } else if (receivedMessage.text.includes("jokes")) {
-      let jokes;
-      jokes = await randomJokes();
+      const jokes = await randomJokes();
       response = {
         text: `${jokes}`,
       };

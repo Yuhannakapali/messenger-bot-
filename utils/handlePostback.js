@@ -3,7 +3,7 @@ const callSendAPI = require("./callSendAPI");
 const handlePostback = (senderPsid, receivedPostback) => {
   let response;
 
-  let payload = receivedPostback.payload;
+  const { payload } = receivedPostback.payload;
 
   if (payload === "yes") {
     response = { text: "Thanks!" };
