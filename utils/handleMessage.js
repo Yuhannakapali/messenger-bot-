@@ -6,7 +6,6 @@ const { witHandler } = require("../wit/witHandler");
 const handleMessage = async (senderPsid, receivedMessage) => {
   let response;
 
-  // Checks if the message contains text
   if (receivedMessage.text) {
     let aiResponse = await witHandler(senderPsid, receivedMessage.text);
     if (aiResponse) {
@@ -34,7 +33,6 @@ const handleMessage = async (senderPsid, receivedMessage) => {
     }
   }
 
-  // Send the response message
   callSendAPI(senderPsid, response);
 };
 
