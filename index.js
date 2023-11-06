@@ -14,7 +14,7 @@ app.use(urlencoded({ extended: true }));
 // Parse application/json
 app.use(json());
 
-app.use("/", require("./Routes/webhookRoutes"));
+app.use("/", require("./routes/webhookRoutes"));
 
 // listen for requests :)
 var listener = app.listen(process.env.PORT, function () {
