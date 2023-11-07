@@ -3,22 +3,22 @@ const { callSendAPI } = require("../utils/callSendAPI");
 const intentJson = require("../config/intents.json");
 const {randomJokes} = require("../utils/randomJokes");
  
+
 const witHandler = async (senderId, message) => {
   let response = false;
+  if (message.length >= 280) { 
+    return response
+  }
+
   let witResponse = await wit.message(message);
-
-  let jokes = await randomJokes();
-
 
   witResponse.intents.forEach((intent) => {
     // eslint-disable-next-line no-prototype-builtins
     if (intentJson.hasOwnProperty(intent.name)) {
-
       let reply = intentJson[intent.name];
-    
       if (intent.name === "wit_jokes") {
         try {
-          callSendAPI(senderId, {text: `${jokes}`})
+          randomJokes().then(joke => (callSendAPI(senderId, {text: `${joke}`})))
         }
         catch (err) {
           console.log(err)

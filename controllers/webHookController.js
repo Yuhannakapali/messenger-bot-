@@ -8,7 +8,7 @@ const homepage =
 //get request to our webhook
 
 const getwebhook = (req, res) => {
-  // Your verify token. Should be a random string.
+
   const VERIFY_TOKEN = process.env.VERIFY_TOKEN;
 
   // Parse the query params
