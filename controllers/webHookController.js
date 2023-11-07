@@ -8,7 +8,7 @@ const homepage =
 //get request to our webhook
 
 const getwebhook = (req, res) => {
-  // Your verify token. Should be a random string.
+
   const VERIFY_TOKEN = process.env.VERIFY_TOKEN;
 
   // Parse the query params
@@ -34,7 +34,6 @@ const getwebhook = (req, res) => {
 
 const postwebhook = (req, res) => {
   let body = req.body;
-  console.log(body);
   // Checks if this is an event from a page subscription
   if (body.object === "page") {
     // Iterates over each entry - there may be multiple if batched

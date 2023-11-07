@@ -18,7 +18,7 @@ const callSendAPI = (senderPsid, response) => {
       method: "POST",
       json: requestBody,
     },
-    (err) => {
+    (err) => { 
       if (!err) {
         console.log("Message sent!");
       } else {
