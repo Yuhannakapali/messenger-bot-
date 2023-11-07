@@ -30,12 +30,11 @@ const getwebhook = (req, res) => {
     }
   }
 };
-
 // Creates the endpoint for your webhook
 
 const postwebhook = (req, res) => {
-  const { body } = req.body;
-  console.log(body);
+  const { body } = req;
+  console.log("request", req);
   // Checks if this is an event from a page subscription
   if (body.object === "page") {
     // Iterates over each entry - there may be multiple if batched

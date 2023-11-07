@@ -5,11 +5,13 @@
   "main": "index.js",
   "scripts": {
     "serve-dev": "nodemon index.js",
-    "lint": "eslint --fix . --ext .js"},
+    "lint": "eslint --fix . --ext .js"
+  },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "body-parser": "^1.20.2",
     "dotenv": "^16.3.1",
     "express": "^4.18.2",
     "node-wit": "^6.6.0",

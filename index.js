@@ -1,10 +1,15 @@
 require("dotenv").config();
 
-// Imports dependencies and set up http server
-
 const express = require("express");
+const { urlencoded, json } = require("body-parser");
 
 const app = express();
+
+// Parse application/x-www-form-urlencoded
+app.use(urlencoded({ extended: true }));
+
+// Parse application/json
+app.use(json());
 
 app.use("/", require("./routes/webhookRoutes"));
 
