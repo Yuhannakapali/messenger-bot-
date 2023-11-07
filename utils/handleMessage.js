@@ -1,13 +1,14 @@
 const { callSendAPI } = require("./callSendAPI");
-const MessageJson = require("./../config/services.json");
-const { witHandler } = require("../wit/witHandler");
+const MessageJson = require("../config/services.json");
 
+const { witHandler } = require("../wit/witHandler");
 
 const handleMessage = async (senderPsid, receivedMessage) => {
   let response;
 
-  if (receivedMessage.text ) {
-    let aiResponse = await witHandler(senderPsid, receivedMessage.text);
+  if (receivedMessage.text) {
+    const aiResponse = await witHandler(senderPsid, receivedMessage.text);
+
     if (aiResponse) {
       return;
     }
@@ -20,19 +21,16 @@ const handleMessage = async (senderPsid, receivedMessage) => {
       response = {
         text: `Hello, we are always available for your  help`,
       };
-    
     } else {
       response = {
         text: `thank you for messaging us we will be available soon!`,
       };
     }
-  }
-  else {
+  } else {
     response = {
-      text : "we only respond to the text message for now"
-    }
+      text: "we only respond to the text message for now",
+    };
   }
-  
 
   callSendAPI(senderPsid, response);
 };

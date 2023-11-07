@@ -1,9 +1,9 @@
 const request = require("request");
 
 const callSendAPI = (senderPsid, response) => {
-  const PAGE_ACCESS_TOKEN = process.env.PAGE_ACCESS_TOKEN;
+  const PAGE_ACCESS_TOKEN = process.env.PAGE_ACCESS_TOKEN || undefined;
 
-  let requestBody = {
+  const requestBody = {
     recipient: {
       id: senderPsid,
     },
@@ -18,13 +18,13 @@ const callSendAPI = (senderPsid, response) => {
       method: "POST",
       json: requestBody,
     },
-    (err) => { 
+    (err) => {
       if (!err) {
         console.log("Message sent!");
       } else {
-        console.error("Unable to send message:" + err);
+        console.error(`Unable to send message: ${err}`);
       }
-    }
+    },
   );
 };
 

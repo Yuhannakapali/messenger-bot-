@@ -1,20 +1,21 @@
-let { handleMessage } = require("../utils/handleMessage");
+const { handleMessage } = require("../utils/handleMessage");
+
 const homepage =
   ("/",
   function (_req, res) {
     res.send("Hello World");
   });
 
-//get request to our webhook
+// get request to our webhook
 
 const getwebhook = (req, res) => {
-
-  const VERIFY_TOKEN = process.env.VERIFY_TOKEN;
+  // Your verify token. Should be a random string.
+  const VERIFY_TOKEN = process.env.VERIFY_TOKEN || undefined;
 
   // Parse the query params
-  let mode = req.query["hub.mode"];
-  let token = req.query["hub.verify_token"];
-  let challenge = req.query["hub.challenge"];
+  const mode = req.query["hub.mode"];
+  const token = req.query["hub.verify_token"];
+  const challenge = req.query["hub.challenge"];
 
   // Checks if a token and mode is in the query string of the request
   if (mode && token) {
@@ -29,21 +30,21 @@ const getwebhook = (req, res) => {
     }
   }
 };
-
 // Creates the endpoint for your webhook
 
 const postwebhook = (req, res) => {
-  let body = req.body;
+  const { body } = req;
+  console.log("request", req);
   // Checks if this is an event from a page subscription
   if (body.object === "page") {
     // Iterates over each entry - there may be multiple if batched
 
     body.entry.forEach((entry) => {
-      let webhookEvent = entry.messaging[0];
+      const webhookEvent = entry.messaging[0];
       console.log(webhookEvent);
 
-      let senderPsid = webhookEvent.sender.id;
-      console.log("Sender PSID: " + senderPsid);
+      const senderPsid = webhookEvent.sender.id;
+      console.log(`Sender PSID: ${senderPsid}`);
 
       if (webhookEvent.message) {
         handleMessage(senderPsid, webhookEvent.message);

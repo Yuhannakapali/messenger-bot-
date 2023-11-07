@@ -1,11 +1,9 @@
-"use strict";
-
 require("dotenv").config();
 
+const express = require("express");
+const { urlencoded, json } = require("body-parser");
 
-const express = require("express"),
-  { urlencoded, json } = require("body-parser"),
-  app = express();
+const app = express();
 
 // Parse application/x-www-form-urlencoded
 app.use(urlencoded({ extended: true }));
@@ -16,6 +14,6 @@ app.use(json());
 app.use("/", require("./routes/webhookRoutes"));
 
 // listen for requests :)
-var listener = app.listen(process.env.PORT, function () {
-  console.log("Your app is listening on port " + listener.address().port);
+const listener = app.listen(process.env.PORT, () => {
+  console.log(`Your app is listening on port ${listener.address().port}`);
 });
