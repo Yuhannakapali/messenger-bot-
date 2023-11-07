@@ -29,9 +29,10 @@ const handleMessage = async (senderPsid, receivedMessage) => {
   }
   else {
     response = {
-      text: `Message is too long !!`  
+      text : "we only respond to the text message for now"
     }
   }
+  
 
   callSendAPI(senderPsid, response);
 };
